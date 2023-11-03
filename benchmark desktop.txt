@@ -1,0 +1,6 @@
+UserBenchmarks: Game 8%, Desk 71%, Work 7%
+CPU: Intel Core i7-4790 - 81%
+GPU: AMD Radeon R5 240 - 5.7%
+HDD: Seagate Barracuda 7200.14 500GB - 60.4%
+RAM: Hynix HMT451U6BFR8C-PB 2x4GB - 58.4%
+MBD: Dell OptiPlex 7020
