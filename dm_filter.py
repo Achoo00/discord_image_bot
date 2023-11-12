@@ -34,6 +34,24 @@ def read_txt_file():
         except UnicodeDecodeError:
             print("could not read character")
 
+
+def check_youtube_vid(f): #old filter
+    i=0
+    for line in f:
+        if 'youtu' in line:
+            i=i+1
+            if 'share' not in line:
+                pass
+                if 'playlist' not in line:
+                    org_line = line.strip()
+                    new_line = org_line
+
+                    urls.append(line.strip())
+                    print(line.strip())
+    print(type(urls))
+    print("the urls:",urls)
+        #    if 'share' in line:
+
 read_txt_file()
 #download()
 

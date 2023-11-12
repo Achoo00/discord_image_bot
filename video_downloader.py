@@ -17,8 +17,7 @@ from pytube import YouTube # Need to use pytube for video length because yt_dlp 
 #https://www.w3schools.com/python/ref_string_rsplit.asp
 #https://codefather.tech/blog/python-check-for-duplicates-in-list/?expand_article=1
 
-urls=[]
-clean_list = []
+#URLS = ['https://www.youtube.com/PointCrow','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
 
 def download(URLS):
     #URLS = ['https','https://www.youtube.com/...','https://www.youtube.com/watch?v=cdkPHgbE...','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
@@ -28,7 +27,9 @@ def download(URLS):
     for url in URLS:
         print("entering try except")
         try:
-            print("downloading this", url)
+            print(type(url))
+            print(type(URLS))          
+            #print("downloading this", url)
             # Get the duration of the video in seconds
             yt = YouTube(url)
             video_length = yt.length
@@ -41,25 +42,12 @@ def download(URLS):
             #print(Exception)
 
 
-def check_youtube_vid(f):
-    i=0
-    for line in f:
-        if 'youtu' in line:
-            i=i+1
-            if 'share' not in line:
-                pass
-                if 'playlist' not in line:
-                    org_line = line.strip()
-                    new_line = org_line
-
-                    urls.append(line.strip())
-                    print(line.strip())
-    print(type(urls))
-    print("the urls:",urls)
-        #    if 'share' in line:
-
 #read_txt_file()
-download()
+with open('Filtered_DMs.txt',encoding='utf8') as f:
+    #download(f)
+    print(f)
+    
+#download(URLS)
 
 #Tests for duplicates
 #print(len(urls))
