@@ -1,9 +1,10 @@
 from yt_dlp import YoutubeDL
 import re
+from pytube import YouTube # Need to use pytube for video length because yt_dlp doesnt do that anymore
+import os
 #Stuff to do
-#1. Still need to remove text before https
-#2. UnicodeDecodeError txt file has weird characters in it,find some way of deleting it or change encoding - done
-#3. Get rid of channel link
+#1. UnicodeDecodeError txt file has weird characters in it,find some way of deleting it or change encoding - done
+#2. Anything longer than 10 minutes is skipped ex: 7h livestream 'https://www.youtube.com/watch?v=Hko7bqYiJow (private)' - done
 
 
 #Types of urls
@@ -17,48 +18,42 @@ import re
 #https://www.w3schools.com/python/ref_string_rsplit.asp
 #https://codefather.tech/blog/python-check-for-duplicates-in-list/?expand_article=1
 
-urls=[]
-clean_list = []
+#URLS = ['https://www.youtube.com/PointCrow','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
 
-def download():
-    URLS = ['https://www.youtube.com/watch?v=Hko7bqYiJow (private)','https://www.youtube.com/@MizkifYT','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
-    #URLS = ['https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
-    with YoutubeDL() as ydl:
-        ydl.download(URLS)
-
-def check_youtube_vid(f):
-    i=0
-    for line in f:
-        if 'youtu' in line:
-            i=i+1
-            if 'share' not in line:
-                pass
-                if 'playlist' not in line:
-                    org_line = line.strip()
-                    new_line = org_line
-
-                    urls.append(line.strip())
-                    print(line.strip())
-    print(type(urls))
-    print("the urls:",urls)
-        #    if 'share' in line:
-
-def remove_unrelated_links(f):
-    # Use a list comprehension to filter out the urls that contain 'https' and 'youtu' but not 'channel', '@', '/c/' or 'playlist'
-    #used re.sub to get rid of all characters before https
-    list_without_playlist = [re.sub(r'^.*?https', 'https', line.strip()) for line in f if 'https' in line and 'youtu' in line and not any(x in line for x in ['channel', '@', '/c/', 'playlist'])]
-    print("the urls", list_without_playlist)
-
-def read_txt_file():
-    with open('DMs.txt',encoding='utf8') as f: #Change encoding to utf8 because there are some weird characters to read
+def download(URLS):
+    #URLS = ['https','https://www.youtube.com/...','https://www.youtube.com/watch?v=cdkPHgbE...','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
+    #URLS = ['https://www.youtube.com/PointCrow','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
+    ydl = YoutubeDL()
+    #with YoutubeDL() as ydl:
+    os.chdir("C://Users//amaha//VS_Python_Projects//discord_image_bot//videos")
+    for url in URLS:
+        #print("entering try except")
         try:
-            remove_unrelated_links(f)
-        except UnicodeDecodeError:
-            print("could not read character")
+            #print(type(url))
+            #print(type(URLS))          
+            #print("downloading this", url)
+            # Get the duration of the video in seconds
+            new_url = url.replace("'",'')
+            yt = YouTube(new_url)
+            video_length = yt.length
+            print("length of video", video_length)
+            # Check if the duration is longer than 10 minutes
+            if video_length < 600:
+                ydl.download(new_url)
+        except Exception as e:
+            print(f"Could not download {new_url}")
+            #print(Exception)
 
-read_txt_file()
-#download()
 
-#Tests for duplicates
-#print(len(urls))
-#print(len(set(urls)))
+#read_txt_file()
+f = open('Filtered_DMs.txt','r', encoding='utf8')
+    #download(f)
+#print(f.readlines())
+
+data = f.read()
+print(type(data))
+data_split = data.split(',')
+#print(data_split)
+print(type(data_split))
+download(data_split)
+#print(data_split[456])
