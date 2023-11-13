@@ -1,5 +1,6 @@
 from yt_dlp import YoutubeDL
 import re
+import pandas as pd
 #Stuff to do
 #1. UnicodeDecodeError txt file has weird characters in it,find some way of deleting it or change encoding - done
 #2. Anything longer than 10 minutes is skipped ex: 7h livestream 'https://www.youtube.com/watch?v=Hko7bqYiJow (private)'
@@ -33,6 +34,9 @@ def read_txt_file():
             remove_unrelated_links(f)
         except UnicodeDecodeError:
             print("could not read character")
+    #df = pd.read_csv("Filtered_DMs.txt", sep=",")
+    #print(df)
+
 
 
 def check_youtube_vid(f): #old filter

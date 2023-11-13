@@ -1,9 +1,10 @@
 from yt_dlp import YoutubeDL
 import re
 from pytube import YouTube # Need to use pytube for video length because yt_dlp doesnt do that anymore
+import os
 #Stuff to do
 #1. UnicodeDecodeError txt file has weird characters in it,find some way of deleting it or change encoding - done
-#2. Anything longer than 10 minutes is skipped ex: 7h livestream 'https://www.youtube.com/watch?v=Hko7bqYiJow (private)'
+#2. Anything longer than 10 minutes is skipped ex: 7h livestream 'https://www.youtube.com/watch?v=Hko7bqYiJow (private)' - done
 
 
 #Types of urls
@@ -24,31 +25,35 @@ def download(URLS):
     #URLS = ['https://www.youtube.com/PointCrow','https://www.youtube.com/watch?v=BaW_jenozKc',"https://www.youtube.com/watch?v=3m7ZUL8zJSc"]
     ydl = YoutubeDL()
     #with YoutubeDL() as ydl:
+    os.chdir("C://Users//amaha//VS_Python_Projects//discord_image_bot//videos")
     for url in URLS:
-        print("entering try except")
+        #print("entering try except")
         try:
-            print(type(url))
-            print(type(URLS))          
+            #print(type(url))
+            #print(type(URLS))          
             #print("downloading this", url)
             # Get the duration of the video in seconds
-            yt = YouTube(url)
+            new_url = url.replace("'",'')
+            yt = YouTube(new_url)
             video_length = yt.length
             print("length of video", video_length)
             # Check if the duration is longer than 10 minutes
             if video_length < 600:
-                ydl.download(url)
+                ydl.download(new_url)
         except Exception as e:
-            print(f"Could not download {url}")
+            print(f"Could not download {new_url}")
             #print(Exception)
 
 
 #read_txt_file()
-with open('Filtered_DMs.txt',encoding='utf8') as f:
+f = open('Filtered_DMs.txt','r', encoding='utf8')
     #download(f)
-    print(f)
-    
-#download(URLS)
+#print(f.readlines())
 
-#Tests for duplicates
-#print(len(urls))
-#print(len(set(urls)))
+data = f.read()
+print(type(data))
+data_split = data.split(',')
+#print(data_split)
+print(type(data_split))
+download(data_split)
+#print(data_split[456])
