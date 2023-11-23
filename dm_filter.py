@@ -1,11 +1,8 @@
+# In Progress
+# Filters out the DMs so that only the youtube video links remain
 from yt_dlp import YoutubeDL
 import re
 import pandas as pd
-#Stuff to do
-#1. UnicodeDecodeError txt file has weird characters in it,find some way of deleting it or change encoding - done
-#2. Anything longer than 10 minutes is skipped ex: 7h livestream 'https://www.youtube.com/watch?v=Hko7bqYiJow (private)'
-
-
 #Types of urls
 #https://www.youtube.com/watch?v=Vr54kmrnCFU
 #https://youtu.be/Ks2UnT4Nzcs
